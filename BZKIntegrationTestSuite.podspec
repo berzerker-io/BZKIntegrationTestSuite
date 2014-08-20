@@ -8,16 +8,13 @@
 Pod::Spec.new do |s|
 
   s.name         = "BZKIntegrationTestSuite"
-  s.version      = "0.0.1"
-  s.summary      = "A short description of BZKIntegrationTestSuite."
+  s.version      = "0.0.2"
+  s.summary      = "Because sometimes you need to test integration at runtime."
 
   s.description  = <<-DESC
-                   A longer description of BZKIntegrationTestSuite in Markdown format.
+                   Because sometimes you need to test integration at runtime.
 
-                   * Think: Why did you write this? What is the focus? What does it do?
-                   * CocoaPods will be using this to generate tags, and improve search results.
-                   * Try to keep it short, snappy and to the point.
-                   * Finally, don't worry about the indent, CocoaPods strips it!
+                   * Allows you to create test cases that can be executed at runtime, with a device or the simulator.
                    DESC
 
   s.homepage     = "https://github.com/BerzerkerDesign/BZKIntegrationTestSuite"
@@ -25,7 +22,7 @@ Pod::Spec.new do |s|
   s.author             = { "Benoit Sarrazin" => "bensarz@gmail.com" }
   s.social_media_url   = "http://twitter.com/bensarz"
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/BerzerkerDesign/BZKIntegrationTestSuite.git", :tag => "0.0.1" }
+  s.source       = { :git => "https://github.com/BerzerkerDesign/BZKIntegrationTestSuite.git", :tag => "0.0.2" }
   s.source_files  = "BZKIntegrationTestSuite", "BZKIntegrationTestSuite/**/*.{h,m}"
   s.public_header_files = "BZKIntegrationTestSuite/**/*.h"
   s.requires_arc = true
