@@ -15,6 +15,7 @@
 		D85A79DF19A51ABB00A166F9 /* BZKIntegrationTestSuite_DemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D85A79DE19A51ABB00A166F9 /* BZKIntegrationTestSuite_DemoTests.m */; };
 		D85A79EF19A51C3100A166F9 /* BZKIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D85A79EE19A51C3100A166F9 /* BZKIntegrationTestCase.m */; };
 		D85A79F219A51C7700A166F9 /* BZKIntegrationTestCaseManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D85A79F119A51C7700A166F9 /* BZKIntegrationTestCaseManager.m */; };
+		D85A79F619A52A3300A166F9 /* SampleIntegrationTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = D85A79F519A52A3300A166F9 /* SampleIntegrationTestCase.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,8 @@
 		D85A79EE19A51C3100A166F9 /* BZKIntegrationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZKIntegrationTestCase.m; sourceTree = "<group>"; };
 		D85A79F019A51C7700A166F9 /* BZKIntegrationTestCaseManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BZKIntegrationTestCaseManager.h; sourceTree = "<group>"; };
 		D85A79F119A51C7700A166F9 /* BZKIntegrationTestCaseManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BZKIntegrationTestCaseManager.m; sourceTree = "<group>"; };
+		D85A79F419A52A3300A166F9 /* SampleIntegrationTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleIntegrationTestCase.h; sourceTree = "<group>"; };
+		D85A79F519A52A3300A166F9 /* SampleIntegrationTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleIntegrationTestCase.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +138,7 @@
 			children = (
 				D85A79CC19A51ABB00A166F9 /* ViewController.h */,
 				D85A79CD19A51ABB00A166F9 /* ViewController.m */,
+				D85A79F319A52A1700A166F9 /* Tests */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -159,6 +163,15 @@
 			);
 			name = BZKIntegrationTestSuite;
 			path = ../BZKIntegrationTestSuite;
+			sourceTree = "<group>";
+		};
+		D85A79F319A52A1700A166F9 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				D85A79F419A52A3300A166F9 /* SampleIntegrationTestCase.h */,
+				D85A79F519A52A3300A166F9 /* SampleIntegrationTestCase.m */,
+			);
+			name = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,6 +275,7 @@
 			files = (
 				D85A79CE19A51ABB00A166F9 /* ViewController.m in Sources */,
 				D85A79CB19A51ABB00A166F9 /* AppDelegate.m in Sources */,
+				D85A79F619A52A3300A166F9 /* SampleIntegrationTestCase.m in Sources */,
 				D85A79EF19A51C3100A166F9 /* BZKIntegrationTestCase.m in Sources */,
 				D85A79C819A51ABB00A166F9 /* main.m in Sources */,
 				D85A79F219A51C7700A166F9 /* BZKIntegrationTestCaseManager.m in Sources */,

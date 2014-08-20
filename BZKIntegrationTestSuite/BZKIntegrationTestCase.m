@@ -11,6 +11,11 @@
 
 #pragma mark - Constants
 
+NSString * const BZKTestCaseResultDescription[] = {
+    [BZKTestCaseResultPassed] = @"Passed",
+    [BZKTestCaseResultFailed] = @"Failed"
+};
+
 NSString * const BZKIntegrationTestCasePrefix = @"test";
 
 #pragma mark - Class Extension
@@ -98,6 +103,8 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
                 return;
             }
         }
+        
+        [self tearDown];
     }
 }
 

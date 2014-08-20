@@ -24,6 +24,13 @@ typedef NS_ENUM(NSInteger, BZKTestCaseResult) {
     BZKTestCaseResultFailed
 };
 
+#pragma mark - Constants
+
+/**
+ *  A string description of `BZKTestCaseResult`.
+ */
+extern NSString * const BZKTestCaseResultDescription[];
+
 #pragma mark - Interface
 
 /**
