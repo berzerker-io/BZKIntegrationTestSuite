@@ -13,7 +13,8 @@
 
 NSString * const BZKTestCaseResultDescription[] = {
     [BZKTestCaseResultPassed] = @"Passed",
-    [BZKTestCaseResultFailed] = @"Failed"
+    [BZKTestCaseResultFailed] = @"Failed",
+    [BZKTestCaseResultNotExecuted] = @"Not Executed"
 };
 
 NSString * const BZKIntegrationTestCasePrefix = @"test";
@@ -23,9 +24,19 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
 @interface BZKIntegrationTestCase ()
 
 /**
+ *  The name of the test being currently executed.
+ */
+@property (nonatomic, strong) NSString *currentTest;
+
+/**
  *  An internal array that contains the names, as strings, of all the `test` methods.
  */
 @property (nonatomic, strong) NSMutableArray *tests;
+
+/**
+ *  An internal dictionary that contains test results.
+ */
+@property (nonatomic, strong) NSMutableDictionary *report;
 
 #pragma mark - Utilities
 
@@ -37,30 +48,11 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
 
 @implementation BZKIntegrationTestCase
 
-#pragma mark - Getters & Setters
-
-- (void)setResult:(BZKTestCaseResult)result {
-    if (_result == BZKTestCaseResultPassed)
-        _result = result;
-}
-
-- (void)setFirstFailedMethodName:(NSString *)firstFailedMethodName {
-    if (_firstFailedMethodName)
-        return;
-    
-    _firstFailedMethodName = firstFailedMethodName;
-}
-
 #pragma mark - Set Up & Tear Down
 
-- (void)setUp {
-    [self _gatherTests];
-    self.result = BZKTestCaseResultPassed;
-}
+- (void)setUp {}
 
-- (void)tearDown {
-    self.tests = nil;
-}
+- (void)tearDown {}
 
 #pragma mark - Execution
 
@@ -70,45 +62,74 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
         
         if (self.isCancelled)
             return;
-        
-        [self setUp];
-        
-        if (self.isCancelled) {
-            [self tearDown];
-            return;
-        }
-        
+
+        [self _gatherTests];
+
         for (NSString *testName in self.tests) {
-            if (self.isCancelled) {
-                [self tearDown];
-                return;
-            }
+            
+            self.currentTest = testName;
+            
+            [self setUp];
+
+            if (self.isCancelled)
+                break;
             
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-            SEL selector = NSSelectorFromString(testName);
+            SEL selector = NSSelectorFromString(self.currentTest);
             [self performSelector:selector];
 #pragma clang diagnostic pop
             
-            if (self.isCancelled) {
-                [self tearDown];
-                return;
-            }
+            if (self.isCancelled)
+                break;
             
             if (self.progress)
-                self.progress([self.tests indexOfObject:testName]);
+                self.progress([self.tests indexOfObject:self.currentTest]);
             
-            if (self.isCancelled) {
-                [self tearDown];
-                return;
-            }
+            if (self.isCancelled)
+                break;
+
+            [self tearDown];
         }
-        
-        [self tearDown];
+
+        if (self.isCancelled) {
+            [self tearDown];
+        }
+
+        self.tests = nil;
     }
 }
 
 #pragma mark - Utilities
+
+- (void)reportTestResult:(BZKTestCaseResult)result error:(NSError *)error {
+    if (nil == self.report)
+        self.report = [@{} mutableCopy];
+    
+    NSString *resultMessage = nil;
+    switch (result) {
+        case BZKTestCaseResultFailed: {
+            resultMessage = [NSString stringWithFormat:@"Failure: %@", error.localizedDescription];
+            break;
+        }
+            
+        case BZKTestCaseResultPassed:
+            resultMessage = @"Success!";
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (self.currentTest && resultMessage) {
+        self.report[self.currentTest] = resultMessage;
+    }
+    
+}
+
+- (NSDictionary *)testReport {
+    return [self.report copy];
+}
 
 - (NSUInteger)testCount {
     NSUInteger nbTests = self.tests.count;

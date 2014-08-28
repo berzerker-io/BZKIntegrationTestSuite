@@ -28,9 +28,9 @@
     
     [self.manager runTests:@[testCase]
                 completion:^(NSArray *tests) {
-                    NSLog(@"[%@:%d] %@ | Thread: %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], @"All Tests Completed");
+                    NSLog(@"[%@:%d] %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), @"All Tests Completed");
                     for (BZKIntegrationTestCase *testCase in tests) {
-                        NSLog(@"[%@:%d] %@ | Thread: %@ | Identifier: %@ | Result: %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], testCase.identifier, BZKTestCaseResultDescription[testCase.result]);
+                        NSLog(@"[%@:%d] %@ | %@: %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), testCase.identifier, testCase.testReport);
                     }
                 }];
 }
