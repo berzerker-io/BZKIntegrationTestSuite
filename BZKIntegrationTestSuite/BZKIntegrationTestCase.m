@@ -48,6 +48,14 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
 
 @implementation BZKIntegrationTestCase
 
+- (id)init {
+    self = [super init];
+    if (nil != self) {
+        [self _gatherTests];
+    }
+    return self;
+}
+
 #pragma mark - Set Up & Tear Down
 
 - (void)setUp {}
@@ -62,8 +70,6 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
         
         if (self.isCancelled)
             return;
-
-        [self _gatherTests];
 
         for (NSString *testName in self.tests) {
             
@@ -95,8 +101,6 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
         if (self.isCancelled) {
             [self tearDown];
         }
-
-        self.tests = nil;
     }
 }
 
@@ -114,7 +118,7 @@ NSString * const BZKIntegrationTestCasePrefix = @"test";
         }
             
         case BZKTestCaseResultPassed:
-            resultMessage = @"Success!";
+            resultMessage = @"Success";
             break;
             
         default:
