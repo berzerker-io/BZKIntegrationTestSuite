@@ -8,7 +8,7 @@
 Pod::Spec.new do |s|
 
   s.name         = "BZKIntegrationTestSuite"
-  s.version      = "0.0.2"
+  s.version      = "0.0.3"
   s.summary      = "Because sometimes you need to test integration at runtime."
 
   s.description  = <<-DESC
@@ -22,7 +22,7 @@ Pod::Spec.new do |s|
   s.author             = { "Benoit Sarrazin" => "bensarz@gmail.com" }
   s.social_media_url   = "http://twitter.com/bensarz"
   s.platform     = :ios, "7.0"
-  s.source       = { :git => "https://github.com/BerzerkerDesign/BZKIntegrationTestSuite.git", :tag => "0.0.2" }
+  s.source       = { :git => "https://github.com/BerzerkerDesign/BZKIntegrationTestSuite.git", :tag => "0.0.3" }
   s.source_files  = "BZKIntegrationTestSuite", "BZKIntegrationTestSuite/**/*.{h,m}"
   s.public_header_files = "BZKIntegrationTestSuite/**/*.h"
   s.requires_arc = true
