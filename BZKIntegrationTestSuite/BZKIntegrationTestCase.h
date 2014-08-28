@@ -21,7 +21,11 @@ typedef NS_ENUM(NSInteger, BZKTestCaseResult) {
     /**
      *  The test has failed.
      */
-    BZKTestCaseResultFailed
+    BZKTestCaseResultFailed,
+    /**
+     *  The test has not be executed yet.
+     */
+    BZKTestCaseResultNotExecuted
 };
 
 #pragma mark - Constants
@@ -35,7 +39,7 @@ extern NSString * const BZKTestCaseResultDescription[];
 
 /**
  *  This class should be used as base class for all your integration tests.
- *  This sublass of `NSOperation` looks for all the methods that start with "test" and executes them.
+ *  This subclass of `NSOperation` looks for all the methods that start with "test" and executes them.
  *  You can use the `setUp` and `tearDown` methods just like `XCTestCase` class.
  */
 @interface BZKIntegrationTestCase : NSOperation
@@ -53,37 +57,41 @@ extern NSString * const BZKTestCaseResultDescription[];
  */
 @property (nonatomic, copy) void(^progress)(NSUInteger index);
 
-/**
- *  The result of the test case. The default is `BZKTestCaseResultPassed`.
- *  You should set this value at the end of each `test` method.
- *  Once the value has been set to `BZKTestCaseResultFailed`, it cannot be set back to `BZKTestCaseResultPassed`.
- */
-@property (nonatomic, assign) BZKTestCaseResult result;
-
-/**
- *  The name of the first `test` method that failed. Helpful for idenfying where the test case failed.
- */
-@property (nonatomic, strong) NSString *firstFailedMethodName;
-
 #pragma mark - Set Up & Tear Down
 
 /** @name section Set Up & Tear Down */
 
 /**
- *  This method should set up the requirements for running all the tests.
- *  The `setUp` method is called once, then all the `test` methods are executed.
+ *  This method should set up the requirements for running each test.
+ *  The `setUp` method is called once, for every test in the test case.
  */
 - (void)setUp;
 
 /**
- *  This method should destroy the requirements after running all the tests.
- *  The `tearDown` method is called once, after all the `test methods have been executed.
+ *  This method should destroy the requirements after running each test.
+ *  The `tearDown` method is called once, for every test in the test case.
  */
 - (void)tearDown;
 
 #pragma mark - Utilities
 
 /** @name Utilities */
+
+/**
+ *  Reports the result of a test. The result is saved and is put into a simple NSDictionary report.
+ *
+ *  @param result The result of the test.
+ *  @param error  The error if the test failed.
+ */
+- (void)reportTestResult:(BZKTestCaseResult)result error:(NSError *)error;
+
+/**
+ *  Returns an NSDictionary object containing the name of all tests that have been reported.
+ *  The key is the name of the test. The value is the error that was reported.
+ *
+ *  @return An instance of `NSDictionary` containing the test names and their associated result.
+ */
+- (NSDictionary *)testReport;
 
 /**
  *  The number of test methods of this class or subclass.

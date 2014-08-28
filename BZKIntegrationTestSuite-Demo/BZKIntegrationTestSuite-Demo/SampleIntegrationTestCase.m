@@ -11,23 +11,18 @@
 @implementation SampleIntegrationTestCase
 
 - (void)setUp {
-    [super setUp];
-    NSLog(@"[%@:%d] %@ | Thread: %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], @"Set Up");
+    NSLog(@"[%@:%d] %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), @"Set Up");
 }
 
 - (void)tearDown {
-    NSLog(@"[%@:%d] %@ | Thread: %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], @"Tear Down");
-    [super tearDown];
+    NSLog(@"[%@:%d] %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), @"Tear Down");
 }
 
 - (void)testSomething {
-    NSLog(@"[%@:%d] %@ | Thread: %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], @"Testing Something");
+    [self reportTestResult:BZKTestCaseResultPassed error:nil];
 }
 
 - (void)testSomethingElse {
-    
-    NSLog(@"[%@:%d] %@ | Thread: %@ | %@", NSStringFromClass(self.class), __LINE__, NSStringFromSelector(_cmd), [NSThread currentThread], @"Testing Something Else");
-    
     __block BOOL success = NO;
     __block BOOL timedout = NO;
     
@@ -39,8 +34,16 @@
         return success || timedout;
     }
                 completion:^{
-                    if (NO == success)
-                        self.result = BZKTestCaseResultFailed;
+                    
+                    if (timedout) {
+                        NSError *error = [[NSError alloc] initWithDomain:NSStringFromClass(self.class) code:1 userInfo:@{NSLocalizedDescriptionKey: @"The test has timed out."}];
+                        [self reportTestResult:BZKTestCaseResultFailed error:error];
+                        return;
+                    }
+                    
+                    if (success) {
+                        [self reportTestResult:BZKTestCaseResultPassed error:nil];
+                    }
                 }];
 }
 
