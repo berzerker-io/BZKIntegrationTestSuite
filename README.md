@@ -4,7 +4,7 @@
 
 I wrote this small library because I needed to [somewhat] automate integration testing with BLE devices which is not possible to do using unit tests. This test suite is based on (but does not inherit from) the XCTestCase class. It has the same 'kind' of functionality, including `setUp` and `tearDown` functions. It also scans your implementation file for any methods prefixed with "test" (i.e. `testSomething`, `testSomethingElse`).
 
-## Installation using Cocoapods
+## Installation using CocoaPods
 
 ```ruby
 pod 'BZKIntegrationTestSuite'
